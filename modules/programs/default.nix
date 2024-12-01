@@ -1,0 +1,5 @@
+[
+  ./gh
+  ./git
+  ./lazygit
+]
