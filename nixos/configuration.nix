@@ -123,16 +123,12 @@
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
-    kitty
     home-manager
     gcc
     wget
@@ -153,6 +149,35 @@
     clean.extraArgs = "--keep-since 4d --keep 3";
     flake = "/home/${user}/system";
   };
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+      inherit pkgs;
+    };
+  };
+
+  # Cachix
+  nix.settings = {
+    substituters = [
+      "https://hyprland.cachix.org"
+      "https://ezkea.cachix.org"
+      "https://cuda-maintainers.cachix.org"
+    ];
+    trusted-public-keys = [
+      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+      "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI="
+      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+    ];
+  };
+
+  nixpkgs.overlays = [(self: super: {
+    nautilus = super.nautilus.overrideAttrs (nsuper: {
+      buildInputs = nsuper.buildInputs ++ (with pkgs.gst_all_1; [
+        gst-plugins-good
+        gst-plugins-bad
+      ]);
+    });
+  })];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
