@@ -2,4 +2,5 @@
   ./gh
   ./git
   ./lazygit
+  ./neovim
 ]

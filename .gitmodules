@@ -1,0 +1,4 @@
+[submodule "modules/programs/neovim/dotfiles"]
+	path = modules/programs/neovim/dotfiles
+	url = https://github.com/ferrumboll/init.lua
+	branch = master
