@@ -1,8 +1,12 @@
 [
+  ./atuin
+  ./direnv
   ./fish
   ./gh
   ./git
   ./lazygit
   ./neovim
+  ./starship
   ./tmux
+  ./zoxide
 ]

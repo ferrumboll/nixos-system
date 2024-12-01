@@ -141,6 +141,7 @@
     nvd
     protonup
     ffmpegthumbnailer
+    any-nix-shell
   ];
 
   home-manager.backupFileExtension = "backup";
