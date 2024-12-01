@@ -140,6 +140,9 @@
     any-nix-shell
   ];
 
+  # enable the tailscale service
+  services.tailscale.enable = true;
+
   home-manager.backupFileExtension = "backup";
   
   # List services that you want to enable:
