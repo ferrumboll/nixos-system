@@ -91,6 +91,17 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  home-manager.users.${user} = {
+    catppuccin = {
+      enable = true;
+      accent = "pink";
+      flavor = "mocha";
+    };
+
+    # Wayland, X, etc. support for session vars
+    systemd.user.sessionVariables = config.home-manager.users.${user}.home.sessionVariables;
+  };
+
   catppuccin = {
     enable = true;
     accent = "pink";
