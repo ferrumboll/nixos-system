@@ -1,5 +1,5 @@
 { user, ... }: {
-  imports = [(import ./hardware-configuration.nix)];
+  imports = [(import ./hardware-configuration.nix) (import ../../modules/services/syncthing)];
 
   networking = {
     hostName = "zeus";
