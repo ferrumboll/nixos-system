@@ -1,0 +1,15 @@
+version: 2
+
+registries:
+  github-octocat:
+    type: git
+    url: https://github.com
+    username: x-access-token
+    password: ${{ secrets.DEPENDABOT_GITHUB_TOKEN }}
+updates:
+  - package-ecosystem: gitsubmodule
+    registries:
+      - github-octocat # Allow version updates for dependencies in this registry
+    schedule:
+        interval: "daily"
+    directory: /
