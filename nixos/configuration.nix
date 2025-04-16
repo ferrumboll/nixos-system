@@ -34,12 +34,6 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "gb";
-    variant = "";
-  };
-
   # Configure console keymap
   console.keyMap = "uk";
 
@@ -128,6 +122,20 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    yubioath-flutter
+    # Video/Audio data composition framework tools like "gst-inspect", "gst-launch" ...
+    gst_all_1.gstreamer
+    # Common plugins like "filesrc" to combine within e.g. gst-launch
+    gst_all_1.gst-plugins-base
+    # Specialized plugins separated by quality
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-plugins-ugly
+    # Plugins to reuse ffmpeg to play almost every video format
+    gst_all_1.gst-libav
+    # Support the Video Audio (Hardware) Acceleration API
+    gst_all_1.gst-vaapi
+
     vim
     home-manager
     gcc
@@ -138,6 +146,7 @@
     protonup
     ffmpegthumbnailer
     any-nix-shell
+    wl-clipboard
   ];
 
   # enable the tailscale service
@@ -151,6 +160,28 @@
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3";
     flake = "/home/${user}/system";
+  };
+
+  # yubikey
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+  
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
+  # smart card
+  services.pcscd.enable = true;
+
+  security.pam.services = {
+    login.u2fAuth = true;
+    sudo.u2fAuth = true;
+  };
+
+  fileSystems."/mnt/tower" = {
+    device = "192.168.178.57:/mnt/user";
+    fsType = "nfs";
+    options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
   };
 
   nixpkgs.config.packageOverrides = pkgs: {

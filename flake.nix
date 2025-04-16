@@ -6,6 +6,7 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
     };
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Home manager
     home-manager = {
@@ -17,9 +18,11 @@
     sops-nix.url = "github:Mic92/sops-nix";
 
     aagl-gtk-on-nix = {
-        url = "github:ezKEa/aagl-gtk-on-nix";
+        url = "github:ezKEa/aagl-gtk-on-nix/release-24.11";
         inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    foundryvtt.url = "github:reckenrode/nix-foundryvtt";
   };
 
   outputs = {
@@ -29,6 +32,7 @@
     sops-nix,
     catppuccin,
     aagl-gtk-on-nix,
+    foundryvtt,
     ...
   } @ flakes: let
     user = "fer";
@@ -36,7 +40,7 @@
     nixosConfigurations = (
       import ./nixos {
         inherit (nixpkgs) lib;
-        inherit flakes nixpkgs home-manager aagl-gtk-on-nix sops-nix user catppuccin;
+        inherit flakes nixpkgs home-manager aagl-gtk-on-nix sops-nix user catppuccin foundryvtt;
       }
     );
   };

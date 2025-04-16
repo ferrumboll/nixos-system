@@ -7,10 +7,7 @@
     };
 
     packages = with pkgs; [
-      obsidian
       krita
-      freetube
-      opencommit
     ];
   };
 }

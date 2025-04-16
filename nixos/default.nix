@@ -6,6 +6,7 @@
   sops-nix,
   catppuccin,
   aagl-gtk-on-nix,
+  foundryvtt,
   ...
 }: let
   system = "x86_64-linux";
@@ -15,6 +16,7 @@
     aagl-gtk-on-nix.nixosModules.default
     catppuccin.nixosModules.catppuccin
     sops-nix.nixosModules.sops
+    foundryvtt.nixosModules.foundryvtt
     ./configuration.nix
   ];
 
@@ -22,7 +24,7 @@
     base.lib.nixosSystem {
       system = arch;
       specialArgs = {
-        inherit flakes user name;
+        inherit flakes user name foundryvtt;
       };
       modules =
         commonModules
@@ -51,4 +53,5 @@
     };
 in {
   zeus = nixosBox system nixpkgs "zeus";
+  holo = nixosBox system nixpkgs "holo";
 }

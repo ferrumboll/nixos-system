@@ -111,4 +111,7 @@
       };
     };
   };
+
+  # files in ./conf.d/ will be copied to ~/.config/fish/conf.d/
+  xdg.configFile."fish/conf.d/venv.fish".source = ./conf.d/venv.fish;
 }

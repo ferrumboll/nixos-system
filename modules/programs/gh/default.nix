@@ -1,6 +1,6 @@
 { pkgs, ... }: {
     programs.gh = {
         enable = true;
-        settings.git_protocol = "https";
+        settings.git_protocol = "ssh";
       };
   }
