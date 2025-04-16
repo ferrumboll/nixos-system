@@ -28,6 +28,7 @@
   outputs = {
     self,
     nixpkgs,
+    unstable,
     home-manager,
     sops-nix,
     catppuccin,
@@ -40,7 +41,7 @@
     nixosConfigurations = (
       import ./nixos {
         inherit (nixpkgs) lib;
-        inherit flakes nixpkgs home-manager aagl-gtk-on-nix sops-nix user catppuccin foundryvtt;
+        inherit flakes nixpkgs unstable home-manager aagl-gtk-on-nix sops-nix user catppuccin foundryvtt;
       }
     );
   };
